@@ -4,6 +4,7 @@ Created on Mon Sep 10 15:05:00 2018
 
 @author: eweixux
 """
+
 import requests
 from bs4 import BeautifulSoup
 import json
@@ -16,16 +17,16 @@ import re
  获取url 的特征 特殊字符个数zifu_num，数字个数shuzi_num，字母个数zimu_num。。
 
 """
-def feature_Url(urlList):
+def feature_Url():
     url_len=[]
     url_zifu_num=[]
     url_shuzi_num=[]
     url_zimu_num=[]
-    positive = pd.read_csv('positive.csv')
+    urllink=[]
+    positive = pd.read_csv('./phishtank/nagetive.csv')
     positive_url = positive['link']
    
     for link in positive_url:
-        
         zifu_num=0
         shuzi_num=0
         zimu_num=0
@@ -40,12 +41,11 @@ def feature_Url(urlList):
         url_zimu_num.append(zimu_num)   
         url_shuzi_num.append(shuzi_num) 
         url_zifu_num.append(zifu_num)  
-    
     positive.insert(2,'zimu_num',url_zimu_num)
     positive.insert(3,'shuzi',url_shuzi_num)
     positive.insert(4,'zifu_num',url_zifu_num)
     
-    positive.to_csv('posi_url.csv',index=False)
+    positive.to_csv('nage_url.csv',index=False)
     return positive
 
 
@@ -96,52 +96,13 @@ def featrue_code(positive_url):
     positive.insert(6,'location_num',code_location_num)
     positive.insert(7,'eval_num',code_eval_num)
     
-    positive.to_csv('posi_url_code.csv',index=False)
+    positive.to_csv('nage_url_code.csv',index=False)
     return positive
 
 if __name__=='__main__':
     #  add url fearture
-    positive = pd.read_csv('posi_url.csv')
+    positive = pd.read_csv('nage_url.csv')
     positive_url = positive['link']
-#    positive = feature_Url(positive_url)
+#    positive = feature_Url()
     positive = featrue_code(positive_url)
-#    data=readHTML('http://www.baidu.com')
-   #http fearture
-   
-   # html  js  fearture
-#    for link in positive_url:
-#        html = readHTML(link)
-#        
-        
-        
 
-#    i=0
-#    html_error=[]
-#    html_code=[]
-#    alexa_lizi = pd.read_csv('alexaScraping.csv')
-#    alexa_link = alexa_lizi['link']
-#    
-#    for link in alexa_link:
-#        i=i+1
-#        print("loading........."+ str(i/500) +"%")
-#        try:
-#            html_code.append(readHTML(link))
-#        except:
-#            print(link)
-#                 
-#    print("----ok----")
-#    print(html_code[6])   
-#    data=readHTML("https://toddscarwash.com/")
-#    print(re.findall(r'(?<=src=\").*?(?=\")|(?<=src=\').*?(?=\')|(?<=href=\").*?(?=\")|(?<=href=\').*?(?=\')',str(BeautifulSoup(data.text.encode('utf-8'),"html.parser"))))
-#    urllist=re.findall(r'(?<=src=\").*?(?=\")|(?<=src=\').*?(?=\')|(?<=href=\").*?(?=\")|(?<=href=\').*?(?=\')',str(BeautifulSoup(data.text.encode('utf-8'),"html.parser")))
-#    for url in urllist:
-#        print(url)
-        
-#    writer = pd.ExcelWriter('output.xlsx')
-#    df.to_excel(writer,'Sheet1')
-#    writer.save()  
- 
-
-                 
-
-    
