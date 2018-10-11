@@ -101,8 +101,9 @@ def featrue_code(positive_url):
 
 if __name__=='__main__':
     #  add url fearture
-    positive = pd.read_csv('nage_url.csv')
-    positive_url = positive['link']
+#    positive = pd.read_csv('nage_url——code.csv')
+#    positive_url = positive['link']
 #    positive = feature_Url()
-    positive = featrue_code(positive_url)
+    nage_url_code=pd.read_csv('nage_url_code.csv')
+#    positive = featrue_code(positive_url)
 
