@@ -22,7 +22,6 @@ def feature_Url():
     url_zifu_num=[]
     url_shuzi_num=[]
     url_zimu_num=[]
-    urllink=[]
     positive = pd.read_csv('./phishtank/nagetive.csv')
     positive_url = positive['link']
    
@@ -100,10 +99,18 @@ def featrue_code(positive_url):
     return positive
 
 if __name__=='__main__':
+    link='http://www.iamagameaddict.com/'
+    data = readHTML(link)
     #  add url fearture
+<<<<<<< HEAD
+#    positive = pd.read_csv('nage_url.csv')
+#    positive_url = positive['link']
+##    positive = feature_Url()
+=======
 #    positive = pd.read_csv('nage_url——code.csv')
 #    positive_url = positive['link']
 #    positive = feature_Url()
     nage_url_code=pd.read_csv('nage_url_code.csv')
+>>>>>>> b88175939b8e5f4a5ca596f9d73a228347d8c7dc
 #    positive = featrue_code(positive_url)
 

@@ -19,3 +19,18 @@ def readHTML(link):
     #按格式读取网页
 #    req.HTML = BeautifulSoup(req.text.encode('utf-8'),"html.parser")
     return req
+
+
+if __name__=='__main__':
+    
+    url = 'https://blog.csdn.net/'
+    req = readHTML(url)
+    data = str(BeautifulSoup(req.text.encode('utf-8'),"html.parser"))
+    print('src:' + str(data.count('src=') + data.count('src =')))
+    print('href:'+ str(data.count('href')))
+    print('跳转location:' + str(data.count('location')))
+    print('iframe:' + str(data.count('iframe')))
+    print('动态eval:'+str(data.count('eval')))
+    print('setIimeut:'+str(data.count('setTimeout')))
+    print('setInterval:'+str(data.count('setInterval')))
+    print('脚本插入：'+ str(data.count('scriptObject')+ data.count('iframeObject')))
