@@ -213,14 +213,7 @@ var action =function() {
          var result = curhost+','+internlink+','+externlink+','+sumLink+','+bili ; 
          $('#datas').append(result);
          $('#datas').append('\n');
-         //  var dataStory = document.getElementById('datas'),
          
-         //  $.post('',data,function(data,status){
-
-        //  })
-          //  f1.writeLine(result); 
-    
-
      //    action();   // 加载完成后调用
        }  
     })
