@@ -16,12 +16,13 @@ import re
  获取url 的特征 特殊字符个数zifu_num，数字个数shuzi_num，字母个数zimu_num。。
 
 """
-def feature_Url(urlList):
+def feature_Url():
     url_len=[]
     url_zifu_num=[]
     url_shuzi_num=[]
     url_zimu_num=[]
-    positive = pd.read_csv('positive.csv')
+    url_T_zifu_num=[]
+    positive = pd.read_csv('raw.csv')
     positive_url = positive['link']
    
     for link in positive_url:
@@ -29,6 +30,7 @@ def feature_Url(urlList):
         zifu_num=0
         shuzi_num=0
         zimu_num=0
+        T_zifu_num=0
         url_len.append(len(link))
         for str in link:
             if str.isalpha():
@@ -37,13 +39,16 @@ def feature_Url(urlList):
                 shuzi_num+=1
             else:
                 zifu_num+=1
+        T_zifu_num =zifu_num - ( link.count('.') + link.count(':') + link.count('/'))
         url_zimu_num.append(zimu_num)   
         url_shuzi_num.append(shuzi_num) 
-        url_zifu_num.append(zifu_num)  
+        url_zifu_num.append(zifu_num)
+        url_T_zifu_num.append(T_zifu_num)
     
     positive.insert(2,'zimu_num',url_zimu_num)
     positive.insert(3,'shuzi',url_shuzi_num)
     positive.insert(4,'zifu_num',url_zifu_num)
+    positive.insert(5,'url_T_zifu_num',url_T_zifu_num)
     
     positive.to_csv('posi_url.csv',index=False)
     return positive
@@ -101,10 +106,10 @@ def featrue_code(positive_url):
 
 if __name__=='__main__':
     #  add url fearture
-    positive = pd.read_csv('posi_url.csv')
-    positive_url = positive['link']
-#    positive = feature_Url(positive_url)
-    positive = featrue_code(positive_url)
+#    positive = pd.read_csv('posi_url.csv')
+#    positive_url = positive['link']
+    positive = feature_Url()
+#    positive = featrue_code(positive_url)
 #    data=readHTML('http://www.baidu.com')
    #http fearture
    

@@ -133,7 +133,6 @@ var action =function() {
     var internlink=0;
     var sunLink;
     var bili; 
- 
     // var fso=new File(Scripting.FileSystemObject); 
     // var f1 = fs('C:\Users\1.txt',2,true);
     // f1.writeLine('11111');
@@ -146,9 +145,9 @@ var action =function() {
         internlink=0;
         sunLink=0;
         bili = 0;
-
         chrome.webRequest.onBeforeSendHeaders.addListener(function(details) { 
             s=s+1;  // 发送的请求数目      // 
+            console.log(details);
             var url = details.url;
             strs = url.split("/");
             host = strs[2];
