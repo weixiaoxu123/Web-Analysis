@@ -175,15 +175,12 @@ var action =function() {
             } else {
                 m.put(rule, m.get(rule) + 1);    //  出现次数+1
             }
-    
         },
-    
         {
             urls: ["<all_urls>"]   //过滤 URL 选择
         },
         ["requestHeaders", "blocking"]);
      }  // loading...
-
      if(changeInfo.status=='complete'){
          console.log(tab);
          console.log(m);
@@ -198,7 +195,8 @@ var action =function() {
            cur=yiji+"."+erji;   // baidu.com
            var es = m.entrys(); // [ 'baidu.com','bdstatic.com']
            console.log(es)
-        for (var i = 0; i < es.length; i++) {
+         // 内外链接
+           for (var i = 0; i < es.length; i++) {
            var e = es[i];
            if (cur == e.key) {
                 internlink= e.value;
@@ -206,10 +204,13 @@ var action =function() {
               	externlink=externlink+e.value;
              }
           }
+
      //  进行数据的保存
          var sumLink=internlink+externlink;
          var bili = internlink/sumLink;
          var result = curhost+','+internlink+','+externlink+','+sumLink+','+bili ; 
+         
+         
          $('#datas').append(result);
          $('#datas').append('\n');
          
