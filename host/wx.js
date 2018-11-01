@@ -182,8 +182,6 @@ var action =function() {
         ["requestHeaders", "blocking"]);
      }  // loading...
      if(changeInfo.status=='complete'){
-         console.log(tab);
-         console.log(m);
            cururl=tab.url;
   		   curstrs = cururl.split("/");
            curhost = curstrs[2];// console.log(curhost)     www.baidu.com
@@ -194,7 +192,7 @@ var action =function() {
            yiji=cursplit.pop();   // baidu
            cur=yiji+"."+erji;   // baidu.com
            var es = m.entrys(); // [ 'baidu.com','bdstatic.com']
-           console.log(es)
+     
          // 内外链接
            for (var i = 0; i < es.length; i++) {
            var e = es[i];
@@ -204,27 +202,30 @@ var action =function() {
               	externlink=externlink+e.value;
              }
           }
-
-     //  进行数据的保存
+        
+    //  进行数据的保存
          var sumLink=internlink+externlink;
          var bili = internlink/sumLink;
          var result = curhost+','+internlink+','+externlink+','+sumLink+','+bili ; 
-        //数据从这里传输。
+    //数据从这里传输。
+         cur='http://www.'+cur
+         var data1=JSON.stringify({url:cur,neiwai:[internlink,externlink,sumLink,bili]})
          $.ajax({
              type:"POST",
              url:'http://localhost:2222/test',
-             data:JSON.stringify({name:'weixu'}),
+             data:data1,
              contentType: "application/json; charset=utf-8",  
              dataType: "json",
              success: function(data) { 
-                 alert(data['res']); 
+               if(data['res']==0){
+                alert('this webpage is safety');
+             }else{
+                alert('this webpage is malicious ');
+            }                 
             } 
          });
-
-
          $('#datas').append(result);
          $('#datas').append('\n');
-         
      //    action();   // 加载完成后调用
        }  
     })

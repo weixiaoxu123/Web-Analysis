@@ -39,14 +39,14 @@ def read_data2_feature_matrix(train_data='train.xlsx', test_data='test.xlsx'):
     #加载数据得到训练数据的特征矩阵
     dataset = pd.read_excel(train_data,header = None)
     dataset.dropna(inplace=True)
-    X_train = dataset[:]
+    X_train = dataset[list(range(8))]
     y_train = dataset[8]
     print('训练样本数是------>'+str(len(y_train)))
 
     #加载数据得到测试笔数据的特征矩阵
     dataset = pd.read_excel(test_data,header = None)
     dataset.dropna(inplace=True)
-    X_test = dataset[:]
+    X_test = dataset[list(range(8))]
     y_test = dataset[8]
     print('测试样本数是------>'+ str(len(y_test)))
     return X_train, y_train, X_test, y_test
@@ -67,7 +67,7 @@ def SVM_model_test(X_train, y_train, X_test, y_test, model_file='svm.m'):
     svm_model=joblib.load('svm.m')
     expected = y_test
     predicted = svm_model.predict(X_test)
-    predicted = model.predict(X_test)
+#    predicted = model.predict(X_test)
     print(metrics.classification_report(expected, predicted))
     print(metrics.confusion_matrix(expected, predicted))
     print(np.linalg.matrix_rank)
@@ -94,6 +94,7 @@ def SVMCV_model_test(X_train, y_train, X_test, y_test):
     print('--------------------------SVMCV 测试准确度为-------------------------------------------')
     expected = y_test
     predicted = model.predict(X_test)
+    print(predicted)
     print(metrics.classification_report(expected, predicted))
     print(metrics.confusion_matrix(expected, predicted))
 #
@@ -111,6 +112,7 @@ def GBDT_model_test(X_train, y_train, X_test, y_test):
     print('--------------------------GBDT  测试准确度为-------------------------------------------')
     expected = y_test
     predicted = model.predict(X_test)
+    print(predicted)
     print(metrics.classification_report(expected, predicted))
     print(metrics.confusion_matrix(expected, predicted)) 
 
@@ -128,6 +130,7 @@ def RF_model_test(X_train, y_train, X_test, y_test):
     print ('--------------------------RF测试准确度为-------------------------------------------')
     expected = y_test
     predicted = model.predict(X_test)
+    print(predicted)
     print(metrics.classification_report(expected, predicted))
     print(metrics.confusion_matrix(expected, predicted))   
 
@@ -145,6 +148,7 @@ def NB_model_test(X_train, y_train, X_test, y_test):
     print ('------------------------------------------朴素贝叶斯测试准确度为-------------------------------------------')
     expected = y_test
     predicted = model.predict(X_test)
+    print(predicted)
     print(metrics.classification_report(expected, predicted))
     print(metrics.confusion_matrix(expected, predicted))
 
@@ -178,6 +182,7 @@ def KNN_model_test(X_train, y_train, X_test, y_test):
     print ('--------------------------KNN   测试准确度为-------------------------------------------')
     expected = y_test
     predicted = model.predict(X_test)
+    print(predicted)
     print(metrics.classification_report(expected, predicted))
     print(metrics.confusion_matrix(expected, predicted)) 
 
@@ -195,6 +200,7 @@ def CART_model_test(X_train, y_train, X_test, y_test):
     print ('-------------------------------------------决策树,分类和回归树（CART）----------------------------------')
     expected = y_test
     predicted = model.predict(X_test)
+    print(predicted)
     print(metrics.classification_report(expected, predicted))
     print(metrics.confusion_matrix(expected, predicted))
     print ('********************************特征重要性为***************************************')
@@ -211,6 +217,7 @@ def LR_model_test(X_train, y_train, X_test, y_test):
     model.fit(X_train, y_train)
     print ('LR模型为：')
     print(model)
+    joblib.dump(model, 'LR_model.m')
     expected = y_test
     predicted = model.predict(X_test)
     print(predicted)
