@@ -210,6 +210,7 @@ var action =function() {
     //数据从这里传输。
          cur='http://www.'+cur
          var data1=JSON.stringify({url:cur,neiwai:[internlink,externlink,sumLink,bili]})
+        // var data =JSON.stringify({data : m})
          $.ajax({
              type:"POST",
              url:'http://localhost:2222/test',
@@ -220,7 +221,7 @@ var action =function() {
                if(data['res']==0){
                 alert('this webpage is safety');
              }else{
-                alert('this webpage is malicious ');
+                alert('this webpage is malicious');
             }                 
             } 
          });

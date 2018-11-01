@@ -14,6 +14,9 @@ def start():
     
 @app.route('/test',methods=['POST'])
 def test():
+    # data = request.json(['data'])
+    # print(data)
+    # return "1111"
     url = request.json['url']
     neiwai=request.json['neiwai']
     zifu_num=0
@@ -29,8 +32,8 @@ def test():
             zifu_num+=1
     T_zifu_num =zifu_num - ( url.count('.') + url.count(':') + url.count('/'))
     svm_model=joblib.load('LR_model.m')
-    data=np.array([zimu_num,shuzi_num,zifu_num,T_zifu_num] + neiwai)
-    print("================"+"webpage data"+"=========================")
+    data=np.array([int(zimu_num),int(shuzi_num),int(zifu_num),int(T_zifu_num)] + neiwai)
+    print("================"+url+"=========================")
     print(data)
     predicted = svm_model.predict(data.reshape(1,-1))
     print("================="+"predicted"+"===========================")
