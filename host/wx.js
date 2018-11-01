@@ -209,8 +209,19 @@ var action =function() {
          var sumLink=internlink+externlink;
          var bili = internlink/sumLink;
          var result = curhost+','+internlink+','+externlink+','+sumLink+','+bili ; 
-         
-         
+        //数据从这里传输。
+         $.ajax({
+             type:"POST",
+             url:'http://localhost:2222/test',
+             data:JSON.stringify({name:'weixu'}),
+             contentType: "application/json; charset=utf-8",  
+             dataType: "json",
+             success: function(data) { 
+                 alert(data['res']); 
+            } 
+         });
+
+
          $('#datas').append(result);
          $('#datas').append('\n');
          

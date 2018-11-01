@@ -8,7 +8,6 @@ Array.prototype.remove = function(s) {
 function Map1() {
     // 属性
     this.keys = new Array();
-
     this.data = new Object();
     // 方法
     this.put = function(key, value) {
