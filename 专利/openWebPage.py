@@ -20,8 +20,8 @@ if __name__ =='__main__':
         print(dda)
         data2 = data2.append(dda,ignore_index = True)
         
-    print(data2)
-    data2.to_csv('nagetive_ZL2.csv',index=False)
+#    print(data2)
+#    data2.to_csv('nagetive_ZL2.csv',index=False)
 #        data2.append(da)
     
 #    (data)

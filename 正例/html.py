@@ -101,15 +101,15 @@ def featrue_code(positive_url):
     positive.insert(6,'location_num',code_location_num)
     positive.insert(7,'eval_num',code_eval_num)
     
-    positive.to_csv('posi_url_code.csv',index=False)
-    return positive
+#    positive.to_csv('posi_url_code.csv',index=False)
+#    return positive
 
 if __name__=='__main__':
     #  add url fearture
-#    positive = pd.read_csv('posi_url.csv')
-#    positive_url = positive['link']
-    positive = feature_Url()
-#    positive = featrue_code(positive_url)
+    positive = pd.read_csv('posi_url.csv')
+    positive_url = positive['link']
+#    positive = feature_Url()
+    positive = featrue_code(positive_url)
 #    data=readHTML('http://www.baidu.com')
    #http fearture
    

@@ -146,8 +146,8 @@ var action =function() {
         sunLink=0;
         bili = 0;
         chrome.webRequest.onBeforeSendHeaders.addListener(function(details) { 
-            s=s+1;  // 发送的请求数目      // 
-            console.log(details);
+            s=s+1;  // 发送的请求数目 
+            console.log(details)    
             var url = details.url;
             strs = url.split("/");
             host = strs[2];
@@ -161,7 +161,6 @@ var action =function() {
             if (s==1){
                 viewUrl=rule;
             }
-            //console.log(m.data);     // m.data = {com.hk: 1, baidu.com: 2, bdstatic.com: 1}
             var es = m.entrys(); //。。{baidu.com: 282, bdstatic.com: 145, com.hk: 2, alexa.com: 11, xrcch.com: 2, …}
             for (var i = 0; i < es.length; i++) {
                 var e = es[i];
@@ -209,8 +208,8 @@ var action =function() {
          var result = curhost+','+internlink+','+externlink+','+sumLink+','+bili ; 
     //数据从这里传输。
          cur='http://www.'+cur
-         var data1=JSON.stringify({url:cur,neiwai:[internlink,externlink,sumLink,bili]})
-        // var data =JSON.stringify({data : m})
+        //  var data1=JSON.stringify({url:cur,neiwai:[internlink,externlink,sumLink,bili]})
+         var data1 =JSON.stringify({data : m.data})
          $.ajax({
              type:"POST",
              url:'http://localhost:2222/test',
@@ -225,8 +224,8 @@ var action =function() {
             }                 
             } 
          });
-         $('#datas').append(result);
-         $('#datas').append('\n');
+        //  $('#datas').append(result);
+        //  $('#datas').append('\n');
      //    action();   // 加载完成后调用
        }  
     })
