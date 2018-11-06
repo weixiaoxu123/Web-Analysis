@@ -13,17 +13,13 @@ import pandas as pd
 import urllib
 import pickle
 import sklearn
-from sklearn import metrics
 from sklearn.svm import SVC
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.ensemble import RandomForestClassifier
-from sklearn import metrics
 from sklearn.naive_bayes import GaussianNB
 from sklearn.grid_search import GridSearchCV  
-from sklearn.svm import SVC  
 from sklearn.naive_bayes import MultinomialNB 
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn import metrics
 from sklearn.tree import DecisionTreeClassifier
 from sklearn import metrics
 from sklearn.linear_model import LogisticRegression
@@ -207,13 +203,12 @@ def CART_model_test(X_train, y_train, X_test, y_test):
     print(model.feature_importances_)
 
 
-#
 def LR_model_test(X_train, y_train, X_test, y_test):
     '''
     使用LR训练和测试模型
     '''
     print ('*************************************逻辑回归*********************************')
-    model = LogisticRegression()
+    model = LogisticRegression()  # 参数可以设置
     model.fit(X_train, y_train)
     print ('LR模型为：')
     print(model)
@@ -223,7 +218,7 @@ def LR_model_test(X_train, y_train, X_test, y_test):
     print(predicted)
     print(metrics.classification_report(expected, predicted))
     print(metrics.confusion_matrix(expected, predicted))
-#    print ("-------------------------------------------逻辑回归测试精度为----------------------------------')
+    print('-------------------------------------------逻辑回归测试精度为----------------------------------')
     print (model.get_params([3]))
     print (model.coef_)
     print (model.intercept_)
@@ -232,12 +227,12 @@ def LR_model_test(X_train, y_train, X_test, y_test):
 if __name__=='__main__':
     X_train, y_train, X_test, y_test=read_data2_feature_matrix(train_data='train.xlsx', test_data='test.xlsx')
 
-    SVM_model_test(X_train, y_train, X_test, y_test, model_file='svm.m')
-    SVMCV_model_test(X_train, y_train, X_test, y_test)
-    GBDT_model_test(X_train, y_train, X_test, y_test)
-    RF_model_test(X_train, y_train, X_test, y_test)
-    NB_model_test(X_train, y_train, X_test, y_test)
-#    MultinomialNB_model_test(X_train, y_train, X_test, y_test)
-    KNN_model_test(X_train, y_train, X_test, y_test)
-    CART_model_test(X_train, y_train, X_test, y_test)
+#    SVM_model_test(X_train, y_train, X_test, y_test, model_file='svm.m')
+#    SVMCV_model_test(X_train, y_train, X_test, y_test)
+#    GBDT_model_test(X_train, y_train, X_test, y_test)
+#    RF_model_test(X_train, y_train, X_test, y_test)
+#    NB_model_test(X_train, y_train, X_test, y_test)
+##    MultinomialNB_model_test(X_train, y_train, X_test, y_test)
+#    KNN_model_test(X_train, y_train, X_test, y_test)
+#    CART_model_test(X_train, y_train, X_test, y_test)
     LR_model_test(X_train, y_train, X_test, y_test)

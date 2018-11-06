@@ -69,9 +69,9 @@ function Map1() {
         return s;
     };
 }
-  //   获取 排名的函数/
+  //   获取 排名的函数
   function famous(val) {
-     // ajax  获取网站的排名。。
+  // ajax  获取网站的排名。。
   var rank; 
      $.ajax({
      	type:"GET",
@@ -127,60 +127,60 @@ var action =function() {
 }
 
     var s=0;
-    var m = new Map1();  // 定义了一个数据结构
+    var m = new Map1(); // 定义了一个数据结构
     var cururl;
     var externlink=0;
     var internlink=0;
     var sunLink;
-    var bili; 
-    // var fso=new File(Scripting.FileSystemObject); 
-    // var f1 = fs('C:\Users\1.txt',2,true);
-    // f1.writeLine('11111');
+    var bili;
 
-    //     程序的开始
+    chrome.webRequest.onBeforeSendHeaders.addListener(function(details) { 
+        s=s+1;  // 发送的请求数目 
+        var url = details.url;
+        strs = url.split("/");
+        host = strs[2];
+        var flag = false;
+        var split = host.split(".");
+        var len=split.length;
+        var rule="";
+        erji=split.pop();
+        yiji=split.pop();
+        rule=yiji+"."+erji;
+        if (s==1){
+            viewUrl=rule;
+        }
+        var es = m.entrys(); //。。{baidu.com: 282, bdstatic.com: 145, com.hk: 2, alexa.com: 11, xrcch.com: 2, …}
+        for (var i = 0; i < es.length; i++) {
+            var e = es[i];
+            if (rule == e.key) {    //当前监听的host是否==e.key    =key   次数加一 跳出  不等于key 就继续循环
+                flag = true;
+                break;
+             }
+        }
+        if (flag == false) {
+            m.put(rule, 1);    //  key 出现的次数
+        } else {
+            m.put(rule, m.get(rule) + 1);    //  出现次数+1
+        }
+      },
+     {
+        urls: ["<all_urls>"]   //过滤 URL 选择
+       },
+       ["requestHeaders", "blocking"]);
+
+
     chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-     if(changeInfo.status=='loading'){
-        m = new Map1(); 
+       
+        if(changeInfo.status=='loading'){
+        m = new Map1();
         externlink=0;
         internlink=0;
         sunLink=0;
         bili = 0;
-        chrome.webRequest.onBeforeSendHeaders.addListener(function(details) { 
-            s=s+1;  // 发送的请求数目 
-            console.log(details)    
-            var url = details.url;
-            strs = url.split("/");
-            host = strs[2];
-            var flag = false;
-            var split = host.split(".");
-            var len=split.length;
-            var rule="";
-            erji=split.pop();
-            yiji=split.pop();
-            rule=yiji+"."+erji;
-            if (s==1){
-                viewUrl=rule;
-            }
-            var es = m.entrys(); //。。{baidu.com: 282, bdstatic.com: 145, com.hk: 2, alexa.com: 11, xrcch.com: 2, …}
-            for (var i = 0; i < es.length; i++) {
-                var e = es[i];
-                if (rule == e.key) {    //当前监听的host是否==e.key    =key   次数加一 跳出  不等于key 就继续循环
-                    flag = true;
-                    break;
-                 }
-            }
-            if (flag == false) {
-                m.put(rule, 1);    //  key 出现的次数
-            } else {
-                m.put(rule, m.get(rule) + 1);    //  出现次数+1
-            }
-        },
-        {
-            urls: ["<all_urls>"]   //过滤 URL 选择
-        },
-        ["requestHeaders", "blocking"]);
      }  // loading...
+
      if(changeInfo.status=='complete'){
+           console.log(m)
            cururl=tab.url;
   		   curstrs = cururl.split("/");
            curhost = curstrs[2];// console.log(curhost)     www.baidu.com
@@ -193,7 +193,7 @@ var action =function() {
            var es = m.entrys(); // [ 'baidu.com','bdstatic.com']
      
          // 内外链接
-           for (var i = 0; i < es.length; i++) {
+         for (var i = 0; i < es.length; i++) {
            var e = es[i];
            if (cur == e.key) {
                 internlink= e.value;
@@ -201,32 +201,31 @@ var action =function() {
               	externlink=externlink+e.value;
              }
           }
-        
     //  进行数据的保存
          var sumLink=internlink+externlink;
          var bili = internlink/sumLink;
          var result = curhost+','+internlink+','+externlink+','+sumLink+','+bili ; 
     //数据从这里传输。
-         cur='http://www.'+cur
-        //  var data1=JSON.stringify({url:cur,neiwai:[internlink,externlink,sumLink,bili]})
-         var data1 =JSON.stringify({data : m.data})
-         $.ajax({
-             type:"POST",
-             url:'http://localhost:2222/test',
-             data:data1,
-             contentType: "application/json; charset=utf-8",  
-             dataType: "json",
-             success: function(data) { 
-               if(data['res']==0){
-                alert('this webpage is safety');
-             }else{
-                alert('this webpage is malicious');
-            }                 
+         cur='http://www.'+ cur
+         console.log(JSON.stringify({url:cur,neiwai:[internlink,externlink,sumLink,bili]}))
+         var data1=JSON.stringify({url:cur,neiwai:[internlink,externlink,sumLink,bili]})
+        //  var data1 =JSON.stringify({data : m.data})
+                $.ajax({
+                    type:"POST",
+                    url:'http://localhost:2222/test',
+                    data:data1,
+                    contentType: "application/json; charset=utf-8",  
+                    dataType: "json",
+                    success: function(data) { 
+                    if(data['res']==0){
+                        alert('this webpage is safety');
+                    }else{
+                        alert('this webpage is malicious');
+                     }                 
+                   } 
+                });
+                m = new Map1();
             } 
-         });
-        //  $('#datas').append(result);
-        //  $('#datas').append('\n');
-     //    action();   // 加载完成后调用
-       }  
+
     })
    

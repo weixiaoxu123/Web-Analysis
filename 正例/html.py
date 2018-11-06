@@ -10,7 +10,7 @@ import json
 import pandas as pd
 import re
 
-
+# 获取代码和url的特征，，，，
 
 """
  获取url 的特征 特殊字符个数zifu_num，数字个数shuzi_num，字母个数zimu_num。。
