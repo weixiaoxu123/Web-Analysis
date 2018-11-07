@@ -33,7 +33,7 @@ def test():
             zifu_num+=1
     T_zifu_num =zifu_num - ( url.count('.') + url.count(':') + url.count('/'))
     svm_model=joblib.load('LR_model.m')
-    
+    #空值处理
     a = np.array(neiwai)
     for i in range(4):
         if neiwai[i]:
