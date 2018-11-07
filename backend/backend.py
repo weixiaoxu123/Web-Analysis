@@ -33,7 +33,17 @@ def test():
             zifu_num+=1
     T_zifu_num =zifu_num - ( url.count('.') + url.count(':') + url.count('/'))
     svm_model=joblib.load('LR_model.m')
+    
+    a = np.array(neiwai)
+    for i in range(4):
+        if neiwai[i]:
+            neiwai[i]=neiwai[i]
+        else:
+            neiwai[i]=0
+ 
+
     data=np.array([int(zimu_num),int(shuzi_num),int(zifu_num),int(T_zifu_num)] + neiwai)
+    print('\n')
     print("=================================================================")
     print("================"+url+"=========================")
     print(data)
@@ -42,6 +52,7 @@ def test():
     print(predicted)
     print("======================="+"over"+"===========================")
     print("==========================================================")
+   
     if predicted==0:
         return json.dumps({"res":0})
     else:

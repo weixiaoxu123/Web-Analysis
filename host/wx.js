@@ -80,7 +80,9 @@ function Map1() {
      	success:function(xml){
            rank=$(xml).find("ALEXA SD POPULARITY").attr("TEXT"); //  排名
 	         if(rank>1000||rank==undefined){
-	        //    var percentcdx;var gailvcdx;
+            
+            
+            //    var percentcdx;var gailvcdx;
 			//    percentcdx=redirectnum/sum;
 	        //    if(percentcdx>=0.05){
 	        //        gailvcdx=1;
@@ -89,19 +91,19 @@ function Map1() {
 	        //    }else{
 	        //        gailvcdx=(percentcdx*100-2)/3;
             //    }
-	           var percentdiaoyu;var gailvdaioyu;
-			   percentdiaoyu=externlink/(externlink+internlink);
-	           if(percentdiaoyu>=0.75){
-	               gailvdaioyu=1;
-	           }else if(percentdiaoyu<=0.25){
-	               gailvdaioyu=0;
-	           }else{
-	               gailvdaioyu=(percentdiaoyu*100-25)/50;
-	           }
-            //    console.log("web page is suspicious and the possibility of redirect is "+(gailvcdx*100).toFixed(2)+"%, the possibility of diaoyu is "+(gailvdaioyu*100).toFixed(2)+"%");
-            //    alert("web page is suspicious and the possibility of redirect is "+(gailvcdx*100).toFixed(2)+"%, the possibility of diaoyu is "+(gailvdaioyu*100).toFixed(2)+"%");
-                console.log("the possibility of diaoyu is "+(gailvdaioyu*100).toFixed(2)+"%");
-               alert(" the possibility of diaoyu is "+(gailvdaioyu*100).toFixed(2)+"%");
+	        //    var percentdiaoyu;var gailvdaioyu;
+			//    percentdiaoyu=externlink/(externlink+internlink);
+	        //    if(percentdiaoyu>=0.75){
+	        //        gailvdaioyu=1;
+	        //    }else if(percentdiaoyu<=0.25){
+	        //        gailvdaioyu=0;
+	        //    }else{
+	        //        gailvdaioyu=(percentdiaoyu*100-25)/50;
+	        //    }
+            //     console.log("web page is suspicious and the possibility of redirect is "+(gailvcdx*100).toFixed(2)+"%, the possibility of diaoyu is "+(gailvdaioyu*100).toFixed(2)+"%");
+            //     alert("web page is suspicious and the possibility of redirect is "+(gailvcdx*100).toFixed(2)+"%, the possibility of diaoyu is "+(gailvdaioyu*100).toFixed(2)+"%");
+            //     console.log("the possibility of diaoyu is "+(gailvdaioyu*100).toFixed(2)+"%");
+            //    alert(" the possibility of diaoyu is "+(gailvdaioyu*100).toFixed(2)+"%");
                     
 	       }
      	}
@@ -171,7 +173,7 @@ var action =function() {
 
     chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
        
-        if(changeInfo.status=='loading'){
+    if(changeInfo.status=='loading'){
         m = new Map1();
         externlink=0;
         internlink=0;
@@ -180,7 +182,9 @@ var action =function() {
      }  // loading...
 
      if(changeInfo.status=='complete'){
-           console.log(m)
+        if(tab.url=='chrome://newtab/'){
+
+        }else{
            cururl=tab.url;
   		   curstrs = cururl.split("/");
            curhost = curstrs[2];// console.log(curhost)     www.baidu.com
@@ -198,14 +202,14 @@ var action =function() {
            if (cur == e.key) {
                 internlink= e.value;
             }else{
-              	externlink=externlink+e.value;
+              	externlink=externlink+e.value-1 ;
              }
           }
-    //  进行数据的保存
+        //进行数据的保存
          var sumLink=internlink+externlink;
          var bili = internlink/sumLink;
          var result = curhost+','+internlink+','+externlink+','+sumLink+','+bili ; 
-    //数据从这里传输。
+         //数据从这里传输。
          cur='http://www.'+ cur
          console.log(JSON.stringify({url:cur,neiwai:[internlink,externlink,sumLink,bili]}))
          var data1=JSON.stringify({url:cur,neiwai:[internlink,externlink,sumLink,bili]})
@@ -224,8 +228,9 @@ var action =function() {
                      }                 
                    } 
                 });
-                m = new Map1();
+                // m = new Map1();
             } 
-
+        }
+      
     })
    
