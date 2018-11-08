@@ -26,7 +26,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.externals import joblib
 
 
-def read_data2_feature_matrix(train_data='train.xlsx', test_data='test.xlsx'):
+def read_data2_feature_matrix(train_data='train_allfeatures.xlsx', test_data='test_allfeatures.xlsx'):
     '''
     加载数据的功能
     输入：训练数据和测试数据的路径
@@ -35,15 +35,15 @@ def read_data2_feature_matrix(train_data='train.xlsx', test_data='test.xlsx'):
     #加载数据得到训练数据的特征矩阵
     dataset = pd.read_excel(train_data,header = None)
     dataset.dropna(inplace=True)
-    X_train = dataset[list(range(8))]
-    y_train = dataset[8]
+    X_train = dataset[[1,5,6,7,8,9,10,11,12,13]]
+    y_train = dataset[18]
     print('训练样本数是------>'+str(len(y_train)))
 
     #加载数据得到测试笔数据的特征矩阵
     dataset = pd.read_excel(test_data,header = None)
     dataset.dropna(inplace=True)
-    X_test = dataset[list(range(8))]
-    y_test = dataset[8]
+    X_test = dataset[[1,5,6,7,8,9,10,11,12,13]]
+    y_test = dataset[18]
     print('测试样本数是------>'+ str(len(y_test)))
     return X_train, y_train, X_test, y_test
 
@@ -225,14 +225,14 @@ def LR_model_test(X_train, y_train, X_test, y_test):
 #
 
 if __name__=='__main__':
-    X_train, y_train, X_test, y_test=read_data2_feature_matrix(train_data='train.xlsx', test_data='test.xlsx')
+    X_train, y_train, X_test, y_test=read_data2_feature_matrix(train_data='train_allfeatures.xlsx', test_data='test_allfeatures.xlsx')
 
-#    SVM_model_test(X_train, y_train, X_test, y_test, model_file='svm.m')
-#    SVMCV_model_test(X_train, y_train, X_test, y_test)
-#    GBDT_model_test(X_train, y_train, X_test, y_test)
-#    RF_model_test(X_train, y_train, X_test, y_test)
-#    NB_model_test(X_train, y_train, X_test, y_test)
-##    MultinomialNB_model_test(X_train, y_train, X_test, y_test)
-#    KNN_model_test(X_train, y_train, X_test, y_test)
-#    CART_model_test(X_train, y_train, X_test, y_test)
+    SVM_model_test(X_train, y_train, X_test, y_test, model_file='svm.m')
+    SVMCV_model_test(X_train, y_train, X_test, y_test)
+    GBDT_model_test(X_train, y_train, X_test, y_test)
+    RF_model_test(X_train, y_train, X_test, y_test)
+    NB_model_test(X_train, y_train, X_test, y_test)
+#    MultinomialNB_model_test(X_train, y_train, X_test, y_test)
+    KNN_model_test(X_train, y_train, X_test, y_test)
+    CART_model_test(X_train, y_train, X_test, y_test)
     LR_model_test(X_train, y_train, X_test, y_test)

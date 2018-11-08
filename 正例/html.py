@@ -72,41 +72,74 @@ def featrue_code(positive_url):
     code_iframe_num=[]
     code_eval_num=[]
     code_location_num=[]
+    code_setTimeout_num=[]
+    code_setInterval_num=[]
+    code_scriptObjectsrc_num=[]
+    code_scriptObjectsetAttribute_num=[]
+    code_scriptObjectinnerHTML_num=[]
+#    code_iframeObjectsrc_num=[]
+#    code_iframeObjectsetAttribute_num=[]
+    code_windowopen_num=[]
+    
+    
     for link in positive_url:
         iframe_num=0
         location_num=0
         eval_num=0
+        setTimeout_num=0
+        setInterval_num=0
+        scriptObjectsrc_num=0
+        scriptObjectsetAttribute_num=0
+        scriptObjectinnerHTML_num=0
+        windowopen_num=0
         try:
             data=readHTML(link)
             iframe_num=str(data).count('iframe')           
             eval_num=str(data).count('eval')
             location_num=str(data).count('location')
+            setTimeout_num=str(data).count('setTimeout')
+            setInterval_num=str(data).count('setInterval')
+            scriptObjectsrc_num=str(data).count('scriptObject.src')
+            scriptObjectsetAttribute_num=str(data).count('scriptObject.setAttribute')
+            scriptObjectinnerHTML_num=str(data).count('scriptObject.innerHTML')
+            windowopen_num=str(data).count('window.location')
             print(link)
-            print(iframe_num)
-            print(location_num)
-            print(eval_num)
         except:
             iframe_num = -1          
             eval_num = -1
             location_num = -1
-            print(link)
-            print(iframe_num)
-            print(location_num)
-            print(eval_num)
+            setTimeout_num=-1
+            setInterval_num=-1
+            scriptObjectsrc_num=-1
+            scriptObjectsetAttribute_num=-1
+            scriptObjectinnerHTML_num=-1
+            windowopen_num=-1
         code_iframe_num.append(iframe_num)
         code_eval_num.append(eval_num)
         code_location_num.append(location_num)
-        
-    positive.insert(5,'iframe_num',code_iframe_num)
-    positive.insert(6,'location_num',code_location_num)
-    positive.insert(7,'eval_num',code_eval_num)
+        code_setTimeout_num.append(setTimeout_num)
+        code_setInterval_num.append(setInterval_num)
+        code_scriptObjectsrc_num.append(scriptObjectsrc_num)
+        code_scriptObjectsetAttribute_num.append(scriptObjectsetAttribute_num)
+        code_scriptObjectinnerHTML_num.append(scriptObjectinnerHTML_num)
+        code_windowopen_num.append(windowopen_num)
+    positive.insert(10,'iframe_num',code_iframe_num)
+    positive.insert(11,'location_num',code_location_num)
+    positive.insert(12,'eval_num',code_eval_num)
+    positive.insert(13,'setTimeout_num',code_setTimeout_num)
+    positive.insert(14,'setInterval_num',code_setInterval_num)
+    positive.insert(15,'scriptObjectsrc_num',code_scriptObjectsrc_num)
+    positive.insert(16,'scriptObjectsetAttribute_num',code_scriptObjectsetAttribute_num)
+    positive.insert(17,'scriptObjectinnerHTML_num',code_scriptObjectinnerHTML_num)
+    positive.insert(18,'windowopen_num',code_windowopen_num)
     
-#    positive.to_csv('posi_url_code.csv',index=False)
-#    return positive
+    positive.to_csv('nage_allfeatures.csv',index=False)
+    return positive
 
 if __name__=='__main__':
     #  add url fearture
-    positive = pd.read_csv('posi_url.csv')
+    positive = pd.read_excel('nage.xlsx')
+    
     positive_url = positive['link']
 #    positive = feature_Url()
     positive = featrue_code(positive_url)

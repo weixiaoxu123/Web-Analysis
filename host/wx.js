@@ -186,6 +186,7 @@ var action =function() {
 
         }else{
            cururl=tab.url;
+           
   		   curstrs = cururl.split("/");
            curhost = curstrs[2];// console.log(curhost)     www.baidu.com
            var cursplit = curhost.split(".");   //     ['www','baidu','com']
@@ -205,12 +206,17 @@ var action =function() {
               	externlink=externlink+e.value-1 ;
              }
           }
-        //进行数据的保存
+
+        //request_type_num
+         console.log(es)
+         var req_type_num =es.length 
+         console.log(req_type_num)
+        //request_num
          var sumLink=internlink+externlink;
          var bili = internlink/sumLink;
          var result = curhost+','+internlink+','+externlink+','+sumLink+','+bili ; 
-         //数据从这里传输。
-         cur='http://www.'+ cur
+         //URL
+         cur='http://'+ curhost    // 修改。
          console.log(JSON.stringify({url:cur,neiwai:[internlink,externlink,sumLink,bili]}))
          var data1=JSON.stringify({url:cur,neiwai:[internlink,externlink,sumLink,bili]})
         //  var data1 =JSON.stringify({data : m.data})
