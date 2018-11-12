@@ -71,27 +71,25 @@ function Map1() {
 }
   //   获取 排名的函数
   var famous = function(val) {
-  var rank;
-  var unfamous_num=0;
-     $.ajax({
-     	type:"GET",
-     	url:"http://data.alexa.com/data/?cli=10&dat=snba&ver=7.0&url="+val,
-     	dataType:"xml",
-     	success:function(xml){
-           rank=$(xml).find("ALEXA SD POPULARITY").attr("TEXT"); //  排名 
-           console.log(rank)
-	       if(rank>1000||rank==undefined){
-                unfamous_num = 1;
-	       }else{
-                unfamous_num = 0;
-           }
-           
-           console.log(unfamous_num);
-           return unfamous_num;
-         }
-         
-      })
-     	   
+        var rank;
+        var unfamous_num=0;
+            $.ajax({
+                async:false, 
+                type:"GET",
+                url:"http://data.alexa.com/data/?cli=10&dat=snba&ver=7.0&url="+val,
+                dataType:"xml",
+                success:function(xml){
+                rank=$(xml).find("ALEXA SD POPULARITY").attr("TEXT"); //  排名 
+                console.log(rank)
+                if(rank>1000||rank==undefined){
+                    unfamous_num =1;
+                }else{
+                    unfamous_num=0;
+                 }
+                }
+                
+            })
+            return unfamous_num;
     }
 //  判断存在1次,或者2次的host 是否在alex排a 的名种
 var action =function() {
@@ -215,11 +213,11 @@ var action =function() {
                     contentType: "application/json; charset=utf-8",  
                     dataType: "json",
                     success: function(data) { 
-                    if(data['res']==0){
-                        alert('this webpage is safety');
-                    }else{
-                        alert('this webpage is malicious');
-                     }                 
+                    // if(data['res']==0){
+                    //     alert('this webpage is safety');
+                    // }else{
+                    //     alert('this webpage is malicious');
+                    //  }                 
                    } 
                 });
             } 
