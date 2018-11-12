@@ -70,62 +70,50 @@ function Map1() {
     };
 }
   //   获取 排名的函数
-  function famous(val) {
-  // ajax  获取网站的排名。。
-  var rank; 
+  var famous = function(val) {
+  var rank;
+  var unfamous_num=0;
      $.ajax({
      	type:"GET",
      	url:"http://data.alexa.com/data/?cli=10&dat=snba&ver=7.0&url="+val,
      	dataType:"xml",
      	success:function(xml){
-           rank=$(xml).find("ALEXA SD POPULARITY").attr("TEXT"); //  排名
-	         if(rank>1000||rank==undefined){
-            
-            
-            //    var percentcdx;var gailvcdx;
-			//    percentcdx=redirectnum/sum;
-	        //    if(percentcdx>=0.05){
-	        //        gailvcdx=1;
-	        //    }else if(percentcdx<=0.02){
-	        //        gailvcdx=0;
-	        //    }else{
-	        //        gailvcdx=(percentcdx*100-2)/3;
-            //    }
-	        //    var percentdiaoyu;var gailvdaioyu;
-			//    percentdiaoyu=externlink/(externlink+internlink);
-	        //    if(percentdiaoyu>=0.75){
-	        //        gailvdaioyu=1;
-	        //    }else if(percentdiaoyu<=0.25){
-	        //        gailvdaioyu=0;
-	        //    }else{
-	        //        gailvdaioyu=(percentdiaoyu*100-25)/50;
-	        //    }
-            //     console.log("web page is suspicious and the possibility of redirect is "+(gailvcdx*100).toFixed(2)+"%, the possibility of diaoyu is "+(gailvdaioyu*100).toFixed(2)+"%");
-            //     alert("web page is suspicious and the possibility of redirect is "+(gailvcdx*100).toFixed(2)+"%, the possibility of diaoyu is "+(gailvdaioyu*100).toFixed(2)+"%");
-            //     console.log("the possibility of diaoyu is "+(gailvdaioyu*100).toFixed(2)+"%");
-            //    alert(" the possibility of diaoyu is "+(gailvdaioyu*100).toFixed(2)+"%");
-                    
-	       }
-     	}
-     })
-     	    
-	}
-
-//  判断存在1次 或者 2次的host 是否在alex排a 的名种
+           rank=$(xml).find("ALEXA SD POPULARITY").attr("TEXT"); //  排名 
+           console.log(rank)
+	       if(rank>1000||rank==undefined){
+                unfamous_num = 1;
+	       }else{
+                unfamous_num = 0;
+           }
+           
+           console.log(unfamous_num);
+           return unfamous_num;
+         }
+         
+      })
+     	   
+    }
+//  判断存在1次,或者2次的host 是否在alex排a 的名种
 var action =function() {
+    var hanjian_host_num =  0 ;
     var es = m.entrys();
+    var aa=0;
     var flag = false;
     for (var i = 0; i < es.length; i++) {
         var e = es[i];
         if ((e.value == 1||e.value==2)) {
-        	var k=e.key;
+            var k=e.key;
             var splitgroup=k.split(".");
             var shuzi=splitgroup.pop();
         	if(isNaN(shuzi)==true){
-        	  famous(e.key);
+            aa = famous(e.key);
+        	hanjian_host_num = hanjian_host_num + aa;
         	}
+            }else{
+            hanjian_host_num =hanjian_host_num + 0;
         }
     }
+    return hanjian_host_num
 }
 
     var s=0;
@@ -207,18 +195,18 @@ var action =function() {
              }
           }
 
-        //request_type_num
-         console.log(es)
+        //获取罕见host的数目
+         hj_host_num=action()
+        // 请求总数
          var req_type_num =es.length 
-         console.log(req_type_num)
-        //request_num
+         //内外请求
          var sumLink=internlink+externlink;
          var bili = internlink/sumLink;
-         var result = curhost+','+internlink+','+externlink+','+sumLink+','+bili ; 
-         //URL
+         var result = curhost+','+internlink+','+externlink+','+sumLink+','+bili +','+req_type_num+','+hj_host_num; 
+         
          cur='http://'+ curhost    // 修改。
-         console.log(JSON.stringify({url:cur,neiwai:[internlink,externlink,sumLink,bili]}))
-         var data1=JSON.stringify({url:cur,neiwai:[internlink,externlink,sumLink,bili]})
+         console.log(JSON.stringify({url:cur,neiwai:[internlink,externlink,sumLink,bili,req_type_num,hj_host_num]}))
+         var data1=JSON.stringify({url:cur,neiwai:[internlink,externlink,sumLink,bili,req_type_num,hj_host_num]})
         //  var data1 =JSON.stringify({data : m.data})
                 $.ajax({
                     type:"POST",
@@ -234,7 +222,6 @@ var action =function() {
                      }                 
                    } 
                 });
-                // m = new Map1();
             } 
         }
       
