@@ -1,4 +1,4 @@
-enng# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
 Created on Mon Sep 10 15:05:00 2018
 
@@ -8,6 +8,7 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import pandas as pd
+import numpy as np
 import re
 
 # 获取代码和url的特征，，，，
@@ -16,6 +17,8 @@ import re
  获取url 的特征 特殊字符个数zifu_num，数字个数shuzi_num，字母个数zimu_num。。
 
 """
+
+datas =np.array(['url','iframe_num','eval_num','location_num','setTimeout_num','setInterval_num','scriptObjectsrc_num','scriptObjectsetAttribute_num','scriptObjectinnerHTML_num','windowopen_num'])                                                                                      
 def feature_Url():
     url_len=[]
     url_zifu_num=[]
@@ -69,17 +72,17 @@ def readHTML(link):
     return req.HTML
 
 def featrue_code(positive_url):
-    code_iframe_num=[]
-    code_eval_num=[]
-    code_location_num=[]
-    code_setTimeout_num=[]
-    code_setInterval_num=[]
-    code_scriptObjectsrc_num=[]
-    code_scriptObjectsetAttribute_num=[]
-    code_scriptObjectinnerHTML_num=[]
-#    code_iframeObjectsrc_num=[]
-#    code_iframeObjectsetAttribute_num=[]
-    code_windowopen_num=[]
+#    code_iframe_num=[]
+#    code_eval_num=[]
+#    code_location_num=[]
+#    code_setTimeout_num=[]
+#    code_setInterval_num=[]
+#    code_scriptObjectsrc_num=[]
+#    code_scriptObjectsetAttribute_num=[]
+#    code_scriptObjectinnerHTML_num=[]
+##    code_iframeObjectsrc_num=[]
+##    code_iframeObjectsetAttribute_num=[]
+#    code_windowopen_num=[]
     
     
     for link in positive_url:
@@ -114,33 +117,40 @@ def featrue_code(positive_url):
             scriptObjectsetAttribute_num=-1
             scriptObjectinnerHTML_num=-1
             windowopen_num=-1
-        code_iframe_num.append(iframe_num)
-        code_eval_num.append(eval_num)
-        code_location_num.append(location_num)
-        code_setTimeout_num.append(setTimeout_num)
-        code_setInterval_num.append(setInterval_num)
-        code_scriptObjectsrc_num.append(scriptObjectsrc_num)
-        code_scriptObjectsetAttribute_num.append(scriptObjectsetAttribute_num)
-        code_scriptObjectinnerHTML_num.append(scriptObjectinnerHTML_num)
-        code_windowopen_num.append(windowopen_num)
-    positive.insert(10,'iframe_num',code_iframe_num)
-    positive.insert(11,'location_num',code_location_num)
-    positive.insert(12,'eval_num',code_eval_num)
-    positive.insert(13,'setTimeout_num',code_setTimeout_num)
-    positive.insert(14,'setInterval_num',code_setInterval_num)
-    positive.insert(15,'scriptObjectsrc_num',code_scriptObjectsrc_num)
-    positive.insert(16,'scriptObjectsetAttribute_num',code_scriptObjectsetAttribute_num)
-    positive.insert(17,'scriptObjectinnerHTML_num',code_scriptObjectinnerHTML_num)
-    positive.insert(18,'windowopen_num',code_windowopen_num)
+        global datas
+        data=np.array([link,int(iframe_num),int(eval_num),int(location_num),int(setTimeout_num),int(setInterval_num),int(scriptObjectsrc_num),int(scriptObjectsetAttribute_num),int(scriptObjectinnerHTML_num),int(windowopen_num)])
+        datas = np.vstack((datas,data))
+        datass=pd.DataFrame(datas)
+        print(data)  
+        datass.to_csv('positive_all.csv',header=0,index=0)
+        
+#        code_iframe_num.append(iframe_num)
+#        code_eval_num.append(eval_num)
+#        code_location_num.append(location_num)
+#        code_setTimeout_num.append(setTimeout_num)
+#        code_setInterval_num.append(setInterval_num)
+#        code_scriptObjectsrc_num.append(scriptObjectsrc_num)
+#        code_scriptObjectsetAttribute_num.append(scriptObjectsetAttribute_num)
+#        code_scriptObjectinnerHTML_num.append(scriptObjectinnerHTML_num)
+#        code_windowopen_num.append(windowopen_num)
+#    positive.insert(11,'iframe_num',code_iframe_num)
+#    positive.insert(12,'location_num',code_location_num)
+#    positive.insert(13,'eval_num',code_eval_num)
+#    positive.insert(14,'setTimeout_num',code_setTimeout_num)
+#    positive.insert(15,'setInterval_num',code_setInterval_num)
+#    positive.insert(16,'scriptObjectsrc_num',code_scriptObjectsrc_num)
+#    positive.insert(17,'scriptObjectsetAttribute_num',code_scriptObjectsetAttribute_num)
+#    positive.insert(18,'scriptObjectinnerHTML_num',code_scriptObjectinnerHTML_num)
+#    positive.insert(19,'windowopen_num',code_windowopen_num)
     
-    positive.to_csv('nage_allfeatures.csv',index=False)
+    positive.to_csv('positive_allfeatures.csv',index=False)
     return positive
 
 if __name__=='__main__':
     #  add url fearture
-    positive = pd.read_excel('nage.xlsx')
-    
-    positive_url = positive['link']
+#    positive = pd.read_excel('nage.xlsx')
+    positive = pd.read_csv('positive_hanjian_500.csv')
+    positive_url = positive['URL']
 #    positive = feature_Url()
     positive = featrue_code(positive_url)
 #    data=readHTML('http://www.baidu.com')
