@@ -200,7 +200,7 @@ var action =function() {
          //内外请求
          var sumLink=internlink+externlink;
          var bili = internlink/sumLink;
-         var result = curhost+','+internlink+','+externlink+','+sumLink+','+bili +','+req_type_num+','+hj_host_num;    //总的请求数目。罕见数目。
+         var result = curhost+','+internlink+','+externlink+','+sumLink+','+bili +','+req_type_num+','+hj_host_num; 
          
          cur='http://'+ curhost    // 修改。
          console.log(JSON.stringify({url:cur,neiwai:[internlink,externlink,sumLink,bili,req_type_num,hj_host_num]}))

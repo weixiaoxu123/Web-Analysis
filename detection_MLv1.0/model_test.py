@@ -26,7 +26,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.externals import joblib
 
 
-def read_data2_feature_matrix(train_data='train_allfeatures.xlsx', test_data='test_allfeatures.xlsx'):
+def read_data2_feature_matrix(train_data='train_1115.xlsx', test_data='test_1115.xlsx'):
     '''
     加载数据的功能
     输入：训练数据和测试数据的路径
@@ -225,14 +225,14 @@ def LR_model_test(X_train, y_train, X_test, y_test):
 #
 
 if __name__=='__main__':
-    X_train, y_train, X_test, y_test=read_data2_feature_matrix(train_data='train_allfeatures.xlsx', test_data='test_allfeatures.xlsx')
+    X_train, y_train, X_test, y_test=read_data2_feature_matrix(train_data='train_1115.xlsx', test_data='test_1115.xlsx')
 
-    SVM_model_test(X_train, y_train, X_test, y_test, model_file='svm.m')
-    SVMCV_model_test(X_train, y_train, X_test, y_test)
-    GBDT_model_test(X_train, y_train, X_test, y_test)
-    RF_model_test(X_train, y_train, X_test, y_test)
-    NB_model_test(X_train, y_train, X_test, y_test)
-#    MultinomialNB_model_test(X_train, y_train, X_test, y_test)
-    KNN_model_test(X_train, y_train, X_test, y_test)
-    CART_model_test(X_train, y_train, X_test, y_test)
-    LR_model_test(X_train, y_train, X_test, y_test)
+#    SVM_model_test(X_train, y_train, X_test, y_test, model_file='svm.m')
+#    SVMCV_model_test(X_train, y_train, X_test, y_test)
+#    GBDT_model_test(X_train, y_train, X_test, y_test)
+#    RF_model_test(X_train, y_train, X_test, y_test)
+#    NB_model_test(X_train, y_train, X_test, y_test)
+##    MultinomialNB_model_test(X_train, y_train, X_test, y_test)
+#    KNN_model_test(X_train, y_train, X_test, y_test)
+#    CART_model_test(X_train, y_train, X_test, y_test)
+#    LR_model_test(X_train, y_train, X_test, y_test)
