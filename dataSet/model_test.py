@@ -36,14 +36,14 @@ def read_data2_feature_matrix(train_data='train_1115.xlsx', test_data='test_1115
     dataset = pd.read_excel(train_data,header = None)
     dataset.dropna(inplace=True)
     print(dataset)
-    X_train = dataset[[0,1,2,3,4,5,6,7,8,9,10,11,12]]
+    X_train = dataset[[0,1]]
     y_train = dataset[13]
     print('训练样本数是------>'+str(len(y_train)))
 
     #加载数据得到测试笔数据的特征矩阵
     dataset = pd.read_excel(test_data,header = None)
     dataset.dropna(inplace=True)
-    X_test = dataset[[0,1,2,3,4,5,6,7,8,9,10,11,12]]
+    X_test = dataset[[0,1]]
     y_test = dataset[13]
     print('测试样本数是------>'+ str(len(y_test)))
     return X_train, y_train, X_test, y_test
