@@ -1,4 +1,3 @@
-ngqu 
 # -*- coding: utf-8 -*-
 """
 Created on Wed Sep  5 14:51:35 2018
@@ -51,7 +50,8 @@ if __name__=='__main__':
     session = requests.Session()
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101 Firefox/52.0",
            "Accept": "*/*"}
-    for i in range(1,26):
+    for i in range(51,100):
+        print('page'+str(i))
         if i==1:
             url = "http://www.alexa.cn/siterank/" 
         else:
@@ -62,7 +62,7 @@ if __name__=='__main__':
         llink+=llinksub
         lname+=lnamesub
     print("writing to csv........")
-    wf = open('./alexaScraping.csv', 'w')
+    wf = open('./alexa6.4-1000-2000.csv', 'w')
     wf.write('rank,link,name\n')
     for i in range(len(lrank)):
         wf.write('%s,%s,%s\n' %(lrank[i],llink[i],lname[i]))

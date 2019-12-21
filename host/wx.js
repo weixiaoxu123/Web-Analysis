@@ -80,7 +80,7 @@ function Map1() {
                 dataType:"xml",
                 success:function(xml){
                 rank=$(xml).find("ALEXA SD POPULARITY").attr("TEXT"); //  排名 
-                console.log(rank)
+               // console.log(rank)
                 if(rank>1000||rank==undefined){
                     unfamous_num =1;
                 }else{
@@ -121,8 +121,10 @@ var action =function() {
     var internlink=0;
     var sunLink;
     var bili;
-
+    var date;
+    
     chrome.webRequest.onBeforeSendHeaders.addListener(function(details) { 
+        
         s=s+1;  // 发送的请求数目 
         var url = details.url;
         strs = url.split("/");
@@ -203,21 +205,25 @@ var action =function() {
          var result = curhost+','+internlink+','+externlink+','+sumLink+','+bili +','+req_type_num+','+hj_host_num;    //总的请求数目。罕见数目。
          
          cur='http://'+ curhost    // 修改。
-         console.log(JSON.stringify({url:cur,neiwai:[internlink,externlink,sumLink,bili,req_type_num,hj_host_num]}))
+         //console.log(JSON.stringify({url:cur,neiwai:[internlink,externlink,sumLink,bili,req_type_num,hj_host_num]}))
          var data1=JSON.stringify({url:cur,neiwai:[internlink,externlink,sumLink,bili,req_type_num,hj_host_num]})
         //  var data1 =JSON.stringify({data : m.data})
-                $.ajax({
+        var date = new  Date()       
+        var t = date.getTime()
+        $.ajax({
                     type:"POST",
                     url:'http://localhost:2222/test',
                     data:data1,
                     contentType: "application/json; charset=utf-8",  
                     dataType: "json",
-                    success: function(data) { 
-                    // if(data['res']==0){
-                    //     alert('this webpage is safety');
-                    // }else{
-                    //     alert('this webpage is malicious');
-                    //  }                 
+                    success: function(data) {
+                    var tt = new  Date().getTime()
+                    var ti = tt-t
+                    if(data['res']==0){
+                        alert('该网页是安全的，请放心浏览。');
+                    }else{
+                        alert('该网页是恶意网页，请注意!' );
+                     }                 
                    } 
                 });
             } 

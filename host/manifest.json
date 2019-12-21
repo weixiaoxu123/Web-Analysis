@@ -1,6 +1,6 @@
 {
 "manifest_version":2,
-"name":"warning",
+"name":"Web-detection",
 "description":"Detection Phishing Web Page.",
 "version":"1.0",
 "permissions":[

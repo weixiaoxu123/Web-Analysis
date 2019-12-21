@@ -25,7 +25,7 @@ def feature_Url():
     url_shuzi_num=[]
     url_zimu_num=[]
     url_T_zifu_num=[]
-    positive = pd.read_csv('raw.csv')
+    positive = pd.read_csv('alexa6.4-1000-2000.csv')
     positive_url = positive['link']
    
     for link in positive_url:
@@ -53,7 +53,7 @@ def feature_Url():
     positive.insert(4,'zifu_num',url_zifu_num)
     positive.insert(5,'url_T_zifu_num',url_T_zifu_num)
     
-    positive.to_csv('posi_url.csv',index=False)
+    positive.to_csv('6.4-positive-1000-2000.csv',index=False)
     return positive
 
 
@@ -84,8 +84,7 @@ def featrue_code(positive_url):
 ##    code_iframeObjectsetAttribute_num=[]
 #    code_windowopen_num=[]
     
-    
-    for link in positive_url:
+    for i in range(3800,len(positive_url)):
         iframe_num=0
         location_num=0
         eval_num=0
@@ -96,7 +95,7 @@ def featrue_code(positive_url):
         scriptObjectinnerHTML_num=0
         windowopen_num=0
         try:
-            data=readHTML(link)
+            data=readHTML(positive_url[i])
             iframe_num=str(data).count('iframe')           
             eval_num=str(data).count('eval')
             location_num=str(data).count('location')
@@ -106,7 +105,7 @@ def featrue_code(positive_url):
             scriptObjectsetAttribute_num=str(data).count('scriptObject.setAttribute')
             scriptObjectinnerHTML_num=str(data).count('scriptObject.innerHTML')
             windowopen_num=str(data).count('window.location')
-            print(link)
+            print(str(i)+'==='+positive_url[i])
         except:
             iframe_num = -1          
             eval_num = -1
@@ -118,11 +117,11 @@ def featrue_code(positive_url):
             scriptObjectinnerHTML_num=-1
             windowopen_num=-1
         global datas
-        data=np.array([link,int(iframe_num),int(eval_num),int(location_num),int(setTimeout_num),int(setInterval_num),int(scriptObjectsrc_num),int(scriptObjectsetAttribute_num),int(scriptObjectinnerHTML_num),int(windowopen_num)])
+        data=np.array([positive_url[i],int(iframe_num),int(eval_num),int(location_num),int(setTimeout_num),int(setInterval_num),int(scriptObjectsrc_num),int(scriptObjectsetAttribute_num),int(scriptObjectinnerHTML_num),int(windowopen_num)])
         datas = np.vstack((datas,data))
         datass=pd.DataFrame(datas)
         print(data)  
-        datass.to_csv('positive_all.csv',header=0,index=0)
+        datass.to_csv('6-4/nage_html_5000.csv',header=0,index=0)
         
 #        code_iframe_num.append(iframe_num)
 #        code_eval_num.append(eval_num)
@@ -143,17 +142,17 @@ def featrue_code(positive_url):
 #    positive.insert(18,'scriptObjectinnerHTML_num',code_scriptObjectinnerHTML_num)
 #    positive.insert(19,'windowopen_num',code_windowopen_num)
     
-    positive.to_csv('positive_allfeatures.csv',index=False)
+  #  positive.to_csv('positive_allfeatures6.4.csv',index=False)
     return positive
 
 if __name__=='__main__':
     #  add url fearture
 #    positive = pd.read_excel('nage.xlsx')
-    positive = pd.read_csv('positive_hanjian_500.csv')
-    positive_url = positive['URL']
+#    positive = pd.read_csv('nage-5000.csv')
+#    positive_url = positive['link']
 #    positive = feature_Url()
-    positive = featrue_code(positive_url)
-#    data=readHTML('http://www.baidu.com')
+#    positive = featrue_code(positive_url)
+    data=readHTML('http://www.baidu.com')
    #http fearture
    
    # html  js  fearture
