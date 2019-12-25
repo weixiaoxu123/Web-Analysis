@@ -301,7 +301,7 @@ if __name__=='__main__':
        # X_train, y_train, X_test, y_test= dataset.loc[train][[0,1,2,3,4,5,6,7,8,9,10,11,12]],dataset.loc[train][13],dataset.loc[test][[0,1,2,3,4,5,6,7,8,9,10,11,12]],dataset.loc[test][13]
        
         # 0-3 URL     4-9 http    10-18 html 
-        X_train, y_train, X_test, y_test= dataset.loc[train][[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]],dataset.loc[train][19],dataset.loc[test][[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]],dataset.loc[test][19]
+        X_train, y_train, X_test, y_test= dataset.loc[train][[0,4,5,6,7,8,10,11,12,13,14,15,16,17,18]],dataset.loc[train][19],dataset.loc[test][[0,4,5,6,7,8,10,11,12,13,14,15,16,17,18]],dataset.loc[test][19]
         #X_train, y_train, X_test, y_test= dataset.loc[train][[0,1,2,3,10,11,12,13,14,15,16,17,18]],dataset.loc[train][19],dataset.loc[test][[0,1,2,3,10,11,12,13,14,15,16,17,18]],dataset.loc[test][19]
         #X_train, y_train, X_test, y_test= dataset.loc[train][[0,1,2,3]],dataset.loc[train][19],dataset.loc[test][[0,1,2,3]],dataset.loc[test][19]
         #X_train, y_train, X_test, y_test= dataset.loc[train][[0,1,2,3,4,5,6,7,8,10,12,13,14,18]],dataset.loc[train][19],dataset.loc[test][[0,1,2,3,4,5,6,7,8,10,12,13,14,18]],dataset.loc[test][19]
@@ -311,8 +311,8 @@ if __name__=='__main__':
  #       RF_model_test(X_train, y_train, X_test, y_test)
 #        NB_model_test(X_train, y_train, X_test, y_test)
 ##    MultinomialNB_model_test(X_train, y_train, X_test, y_test)
-#        KNN_model_test(X_train, y_train, X_test, y_test)
-        CART_model_test(X_train, y_train, X_test, y_test)
+        KNN_model_test(X_train, y_train, X_test, y_test)
+#        CART_model_test(X_train, y_train, X_test, y_test)
 #        LR_model_test(X_train, y_train, X_test, y_test)
 #        break
     #    print(dataset[dataset[test]][-1])
